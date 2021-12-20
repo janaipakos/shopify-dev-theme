@@ -1,0 +1,16 @@
+{% assign style = "" %}
+{% if assets_item["background_color"] != blank %}
+  {% assign style = "style='background-color: " | append: assets_item["background_color"] | append: "';" %}
+{% endif %}
+{% if assets_item["image"] != blank and assets_item["video"] == blank %}
+  <div class="bg-image" {{style }}>
+    <img class="lazyload" alt="{{assets_item["alt"]}}" data-src="{{ assets_item["image"] }}" />
+  </div>
+{% endif %}
+{% if assets_item["video"] != blank %}
+  <div class="bg-video" {{style}}>
+    <video muted loop autoplay>
+      <source src="{{ assets_item["video"] }}">
+    </video>
+  </div>
+{% endif %}

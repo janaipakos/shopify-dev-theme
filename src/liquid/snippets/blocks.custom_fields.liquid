@@ -1,0 +1,13 @@
+<div class="custom-fields-section custom-fields-section-{{index}}">
+    <div class="custom-fields-section__products">
+      <div class="custom-fields-section__item custom-fields-section__item--{{ block.type }} custom-fields-section__item--{{ block.type }}--{{ block.settings.key }}" {{ block.shopify_attributes }}>
+        {% case block.type %}
+          {% when "custom-fields" %}
+            {% render "custom_fields.content" %}
+          {% when "custom-fields-score-cards" %}
+            {% render "custom_fields.products.score_cards" %}
+        {% endcase%}
+      </div>
+    </div>
+  
+</div>

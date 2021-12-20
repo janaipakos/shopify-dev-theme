@@ -1,0 +1,47 @@
+{% assign classes = "" %}
+{% assign settings = item["settings"][0] %}
+{% if item["assets"] != blank %} 
+  {% assign classes = classes | append: " bg-asset" %}
+{% endif %}
+
+<div class="cf-hero {{classes}}" data-aos="fade-up" data-aos-delay="200">
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-12">
+        <div class="cf-content--container">
+          {% if item["title"] != blank %}
+            <div class="cf-content--title">
+              {% 
+                render 'cf-title', 
+                  style: "h1",
+                  heading: "h1",
+                  title: item["title"],
+                  settings: settings 
+              %}
+              {% if item["subtitle"] != blank %}
+                <div class="row justify-content-center">
+                  <div class="col-12 col-lg-6">
+                    {% 
+                      render 'cf-title', 
+                        style: "navigation-header",
+                        type: "subtitle",
+                        title: item["subtitle"],
+                        settings: settings 
+                    %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if item["assets"] != blank %}
+    {% for assets_item in item["assets"] limit:1 %}
+      {% render 'cf-asset-primary', 
+          assets_item: assets_item
+      %}
+    {% endfor %}
+  {% endif %}
+</div>

@@ -1,0 +1,6 @@
+development:
+  password: shptka_e052162a78680f453bbaa71a2855c1ac
+  theme_id: "129686896897"
+  store: james-demo-dev.myshopify.com
+  ignore_files:
+  - config/settings_data.json

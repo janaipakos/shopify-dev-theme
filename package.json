@@ -1,0 +1,38 @@
+{
+  "name": "avocado-developer-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "create:config": "node ./.dev/scripts/configure.js",
+    "build": "rm -Rf ./dist && webpack --config ./webpack.config.js",
+    "deploy": "npm run build && node ./.dev/scripts/deploy.js",
+    "watch": "npm run build -- --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.16.4",
+    "@shopify/themekit": "^1.1.9",
+    "autoprefixer": "^10.4.0",
+    "babel-loader": "^8.2.3",
+    "copy-webpack-plugin": "^10.0.0",
+    "core-js": "^3.19.2",
+    "css-loader": "^6.5.1",
+    "html-loader": "^3.0.1",
+    "mini-css-extract-plugin": "^2.4.5",
+    "node-fetch": "^3.1.0",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "sass": "^1.44.0",
+    "sass-loader": "^12.3.0",
+    "style-loader": "^3.3.1",
+    "uglifyjs-webpack-plugin": "^1.1.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-merge": "^5.8.0",
+    "webpack-shell-plugin-next": "^2.2.2",
+    "yargs": "^17.3.0"
+  }
+}

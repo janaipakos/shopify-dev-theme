@@ -1,0 +1,26 @@
+{% if type == blank %}
+  {% assign type = "title" %}
+{% endif %}
+{% if heading == blank %}
+  {% assign heading = "h2" %}
+{% endif %}
+
+{% if type == "subtitle" %}
+  {% assign heading = "h3" %}
+{% endif %}
+{% assign wrapper = type | append: "_wrapper" %}
+{% assign w_style = type | append: "_style" %}
+
+{% if settings[wrapper] != blank %}
+  {% assign heading = settings[wrapper] | handleize %}
+{% endif %}
+
+{% if settings[w_style] != blank %}
+  {% assign style = settings[w_style] | handleize %}
+{% endif %}
+
+
+{% assign style = style | append: " title--" | append: type | downcase %}
+{% assign heading = heading | downcase %}
+
+<{{heading}} class="{{style | strip}}">{{title}}</{{heading}}>

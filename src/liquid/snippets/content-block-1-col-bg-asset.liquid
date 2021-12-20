@@ -1,0 +1,62 @@
+{% assign item_settings = item["settings"][0] %}
+{% assign classes = item_settings["classes"] %}
+{% assign item_cols = item["content_sizing"] %}
+
+{% if item["assets"] != blank %} 
+  {% assign classes = classes | append: " bg-asset" %}
+{% endif %}
+
+{% if item["content_assets"] != blank %}
+  {% assign classes = classes | append: " has-content-assets" %}
+{% endif %}
+
+<div data-tm="bg-asset" class="cf-content-1-col {{classes}}" data-aos="fade-up" data-aos-delay="200">
+  <div class="container px-md-0">
+    <div class="row align-items-center justify-content-center">
+      <div class="{% render 'cf-col-sizing', item_cols: item_cols, mobile: 12, lg: 9, xxl: 10 %}">
+        <div class="cf-content--container">
+          {% if item["title"] != blank %}
+            <div class="cf-content--title">
+              {% 
+                render "cf-title", 
+                  title: item["title"], 
+                  style: "h5",
+                  settings: item_settings 
+              %}
+            </div>
+          {% endif %}
+          {% if item["subtitle"] != blank %}
+            <div class="cf-content--subtitle">
+              {% 
+                render "cf-title", 
+                  title: item["subtitle"], 
+                  type: "subtitle", 
+                  style: "h2",
+                  settings: item_settings
+              %}
+            </div>
+          {% endif %}
+          {% if item["content"] != blank %}
+            <div class="cf-content--content">
+              {{ item["content"] }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if item["content_assets"] != blank %}
+    {% 
+      render 'content-assets', 
+        settings: item_settings, 
+        assets: item["content_assets"] 
+    %}
+  {% endif %}
+  {% if item["assets"] != blank %}
+    {% for assets_item in item["assets"] limit:1 %}
+      {% render 'cf-asset-primary', 
+          assets_item: assets_item
+      %}
+    {% endfor %}
+  {% endif %}
+</div>

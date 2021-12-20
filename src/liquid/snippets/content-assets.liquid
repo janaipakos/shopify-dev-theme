@@ -1,0 +1,36 @@
+{% if assets != blank %}
+  <div class="cf-assets d-flex flex-wrap align-items-center justify-content-center {{container_class}}">
+    {% for asset in assets%}
+      {% assign name = asset["image"] | split: "/" | last | split: "?" | first | split: "."%}
+      {% assign rem  = name.size | minus: 1%}
+      {% assign name = name | slice: 0, rem | prepend: "cf-image-" | handleize %}
+      
+      {% if asset["max_image_width"] != blank %}
+        <style>
+          .{{name}} {
+            max-width: {{asset["max_image_width"] | append: "px"}}
+          }
+        </style>
+      {% endif %}
+      {% if asset["max_image_width_mobile"] != blank %}
+        <style>
+          @media screen and (max-width: 768px) {
+            .{{name}} {
+              max-width: {{asset["max_image_width_mobile"] | append: "px"}}
+            }
+          }
+        </style>
+      {% endif %}
+
+      {% if asset["image"] != blank and asset["video"] == blank %}
+        <img  
+          class="lazyload {{name}} {{asset_class}}" alt="{{asset["alt"]}}" data-src="{{asset["image"]}}" 
+        />
+      {% elsif asset["video"] != blank %}
+        <video autoplay muted contols class="{{name}}">
+          <source src={{assets["video"]}}" />
+        </video>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}

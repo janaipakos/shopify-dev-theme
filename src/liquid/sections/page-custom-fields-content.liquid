@@ -1,0 +1,19 @@
+{% for block in section.blocks %}
+  {% if block.type == 'custom-fields' or block.type == 'custom-fields-score-cards'  %}
+    {% render "blocks.custom_fields" with block: block %}
+  {% endif %}
+{% endfor %}
+{% schema %}
+{
+  "name": "Page Template",
+  "class": "page-custom-fields-content",
+  "blocks": [
+    {
+      "type": "custom-fields",
+      "name": "Content",
+      "limit": 1, 
+      "settings": []
+	  }
+  ]
+}
+{% endschema %}

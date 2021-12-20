@@ -1,0 +1,98 @@
+{% assign item_settings = item["settings"][0] %}
+{% assign flex_reverse = "flex-md-row" %}
+{% assign content_classes = "" %}
+{% assign content_fade = "fade-right" %}
+{% assign content_secondary_fade = "fade-left" %}
+{% if item["assets"].size == 1 %}
+  {% assign content_classes = content_classes | append: " content-flex-end" %}
+{% endif %}
+
+{% if item_settings["reverse"] == 1 %}
+  {% assign flex_reverse = "flex-md-row-reverse" %}
+  {% assign content_fade = "fade-left" %}
+  {% assign content_secondary_fade = "fade-right" %}
+{% endif %}
+
+{% if template_name == "page" %}
+  {% assign title_style = "h3" %}
+{% endif %}
+
+<div class="cf-content-{{block_name}} {{item_settings["classes"]}} {{ flex_reverse }}">
+  <div class="container-fluid">
+    <div class="row flex-md-nowrap flex-column-reverse {{ flex_reverse }}">
+      <div class="col-12 col-md-5 {{content_classes }}">
+        <div class="cf-content--container">
+          <div class="cf-content--wrapper">
+            {% if item["title"] != blank %}
+              <div class="cf-content--title">
+                {% 
+                  render 'cf-title', 
+                    title: item["title"], 
+                    style: title_style,
+                    settings: item_settings 
+                %}
+              </div>
+            {% endif %}
+            {% if item["subtitle"] != blank %}
+              <div class="cf-content--subtitle">
+                {% 
+                  render 'cf-title',
+                    title: item["subtitle"],
+                    type: "subtitle",
+                    style: "h6",
+                    settings: item_settings 
+                 %}
+              </div>
+            {% endif %}
+            {% if item["content"] != blank %}
+              <div class="cf-content--content">
+                {{ item["content"] }}
+                {% if item["cta"] != blank %}
+                  <div>{{ item["cta"] | replace: "<a", '<a class="link-cta"' }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+          {% if item["assets"] != blank %}
+            {% for assets_item in item["assets"] limit: 1 offset: 1%}
+              <div class="floating-media-secondary--container" data-aos={{content_fade}} data-aos-delay="200">
+                <div class="floating-media--secondary">
+                  {% if assets_item["image"] != blank and assets_item["video"] == blank %}
+                    <div class="bg-image">
+                      <img class="lazyload" data-src="{{ assets_item["image"] }}" />
+                    </div>
+                  {% endif %}
+                  {% if assets_item["video"] != blank %}
+                    <div class="bg-video">
+                      <video muted loop autoplay>
+                        <source src="{{ assets_item["video"] }}">
+                      </video>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+
+      {% assign col-md-media = "col-md-7" %}
+      {% if block_name == "floating-3" %}
+        {% assign col-md-media = "col-md-6" %}
+      {% endif %}
+      <div class="col-12 {{col-md-media}} cf-content--media">
+        {% if item["assets"] != blank %}
+          {% for assets_item in item["assets"] limit: 1%}
+            <div class="floating-media-primary--container" data-aos={{content_secondary_fade}}>
+              <div class="floating-media--primary">
+                {% render 'cf-asset-primary', 
+                    assets_item: assets_item
+                %}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}                
+      </div>
+    </div>
+  </div>
+</div>        

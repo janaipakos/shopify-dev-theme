@@ -1,0 +1,65 @@
+  {% if product.metafields.custom_fields["score_cards"] != blank %}
+    <div class="cf-container">
+      {% for item in product.metafields.custom_fields["score_cards"] %}
+        <div class="cf-score-card cf-item">
+          <div class="container" aria-live="polite">
+            <div class="row">
+              <div class="col-12 text-center">
+                <div class="sc-heading">
+                  {% if item["title"] != blank %}
+                    <h2 class="sc-heading-title">{{item["title"]}}</h2>
+                    {% endif %}
+                    {% if item["content"] != blank %}
+                    <div class="sc-heading-content">
+                      {{item["content"]}}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {% if item["cards"] != blank %}
+                  <div class="score-cards">
+                    <div class="sc-items">
+                      {% for card in item["cards"] %}
+                        {% assign name = card.category | handleize %}
+                        {% assign img = "score-" | append: name | append: ".svg" %}
+                        <div class="sc-item sc-item-{{card.category | handleize}}">
+                          <div class="sc-item-title">
+                            <img class="sc-image lazyload" data-src="{{img | asset_url }}" />
+                            <div class="sc-title">{{ card.category | capitalize}}</div>
+                            <div class="sc-score">{{ card.score }}</div>
+                            <div class="sc-line"></div>
+                          </div>
+                          <div class="content-wrapper">
+                            <div class="content">
+                              {{ card.content }}
+                              {% if card.cta != blank %}
+                                <div class="link-cta">{{card.cta}}</div>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="content-overflow" aria-hidden="true">
+                      {% for card in item["cards"] %}
+                        <div class="sc-content">
+                          {{ card.content }}
+                          {% if card.cta != blank %}
+                            <div class="link-cta">{{card.cta}}</div>
+                          {% endif %}
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="sc-pagination"></div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}

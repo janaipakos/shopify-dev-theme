@@ -1,0 +1,66 @@
+  {% assign tmpl = product %}
+  {% if template.name == 'page' %}
+    {% assign tmpl = page %}
+  {% endif %}
+  {% if tmpl.metafields.custom_fields["content"] != blank %}
+    <div class="cf-container">
+      {% for item in tmpl.metafields.custom_fields["content"] %}
+        
+        {% if item["block_type"] == "Hero" %}
+            {%
+              render "content-block-hero",
+                item: item,
+                template_name: template.name
+            %}
+        {% elsif item["block_type"] == "1 Column Content" %}
+          {% assign col_type = "" %}
+          {% if 
+            item["settings"] != blank 
+            and item["settings"][0]["background_color"] != blank 
+            and item["assets"] == blank 
+          %}
+            {% assign col_type = "bg-color" %}
+          {% elsif item["assets"] != blank %}
+            {% assign col_type = "bg-asset" %}
+          {% endif %}
+          {% case col_type %}
+            {% when "bg-asset" %}
+              {% 
+                render "content-block-1-col-bg-asset", 
+                  item: item, 
+                  template_name: template.name,
+              %}
+            {% when "bg-color" %}
+              {% 
+                render "content-block-1-col-bg-color", 
+                  item: item, 
+                  template_name: template.name,
+              %}
+            {% else %}
+              {% 
+                render "content-block-1-col", 
+                  item: item, 
+                  template_name: template.name,
+                  container_classes: container_classes,
+              %}
+            {% endcase %}
+        {% elsif 
+          item["block_type"] == "Floating Images 1" 
+          or item["block_type"] == "Floating Images 2" 
+          or item["block_type"] == "Floating Images 3"
+        %}
+          {% 
+            assign block_name = item["block_type"] 
+              | replace: "Images", "" 
+              | handleize 
+          %}
+          {% 
+            render "content-block-float", 
+              item: item, 
+              template_name: template.name,
+              block_name: block_name
+          %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}

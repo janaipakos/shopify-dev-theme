@@ -1,0 +1,39 @@
+{% assign item_settings = item["settings"][0] %}
+{% assign item_cols = item["content_sizing"] %}
+
+<div class="cf-content-1-col bg-{{item_settings["background_color"] | downcase }} {{item_settings["classes"]}}" data-aos="fade-up" data-aos-delay="200">
+  <div class="container px-md-0">
+    <div class="row align-items-center justify-content-center px-lg-5">
+      <div class="{% render "cf-col-sizing", item_cols: item_cols, mobile: 12, lg: 10 -%}">
+        <div class="cf-content--container">
+          {% if item["title"] != blank %}
+            <div class="cf-content--title">
+              {% 
+                render "cf-title", 
+                  title: item["title"], 
+                  style: "h5",
+                  settings: item_settings 
+              %}
+            </div>
+          {% endif %}
+          {% if item["subtitle"] != blank %}
+            <div class="cf-content--subtitle">
+              {% 
+                render "cf-title", 
+                  title: item["subtitle"], 
+                  type: "subtitle", 
+                  style: "h4",
+                  settings: item_settings
+              %}
+            </div>
+          {% endif %}
+          {% if item["content"] != blank %}
+            <div class="cf-content--content">
+              {{ item["content"] }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

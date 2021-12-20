@@ -1,0 +1,43 @@
+{% assign has_mobile_col = false -%}
+{% assign has_sm_col = false -%}
+{% assign has_md_col = false -%}
+{% assign has_lg_col = false -%}
+{% assign has_xxl_col = false -%}
+{%- if item_cols != blank -%}
+  {%- for col in item_cols -%}
+    {%- case col["breakpoint"] -%}
+      {%- when "mobile" -%}
+        {% assign has_mobile_col = true -%}
+      {%- when "sm" -%}
+        {% assign has_sm_col = true -%}
+      {%- when "md" -%}
+        {% assign has_md_col = true -%}
+      {%- when "lg" -%}
+        {% assign has_lg_col = true -%}
+      {%- when "xxl" %}
+        {% assign has_xxl_col = true -%}
+    {%- endcase -%}
+    {% assign bp = "" -%}
+    {%- if col["breakpoint"] != "mobile" -%}
+      {% assign bp = col["breakpoint"] | prepend: "-" -%}
+    {%- endif -%}
+    {% assign col_size = "col"| append: bp | append: "-" | append: col["size"] | prepend: " " -%}
+    {% assign col_classes = col_classes | append: col_size -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if has_mobile_col == false and mobile != blank -%}
+  {% assign col_classes = col_classes | append: " col-" | append: mobile -%}
+{%- endif -%}
+{%- if has_sm_col == false and sm != blank -%}
+  {% assign col_classes = col_classes | append: " col-sm-" | append: sm -%}
+{%- endif -%}
+{%- if has_md_col == false and md != blank -%}
+  {% assign col_classes = col_classes | append: " col-md-" | append: md -%}
+{%- endif -%}
+{%- if has_lg_col == false and lg != blank -%}
+  {% assign col_classes = col_classes | append: " col-lg-" | append: lg -%}
+{%- endif -%}
+{%- if has_xxl_col == false and xxl != blank -%}
+  {% assign col_classes = col_classes | append: " col-xxl-" | append: xxl -%}
+{%- endif -%}
+{{col_classes | strip}}
