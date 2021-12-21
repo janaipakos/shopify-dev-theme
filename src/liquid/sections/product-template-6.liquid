@@ -170,11 +170,13 @@
     <div class="col-lg-8 col-md-6 col-12">
       <div class="breadcrumbs-overlay">{%- include 'breadcrumb' -%}</div>
       <div class="photos">
+        {%- comment  -%}{% Removed because it was overlapping with added hide/show button %}
         <a href="#" class="close-gallery disabled-anchor"></a>
+        {%- endcomment -%}
         <div class="photos__item photos__item--main">
         
           <div class="row" itemscope itemtype="http://schema.org/ImageGallery">
-            [INSERT IMAGE GALLERY HERE] 
+            {% render 'pdp-media-grid' %}
           </div>
           <noscript>
               <a href="{{ featured_image | img_url: '1200x' }}">

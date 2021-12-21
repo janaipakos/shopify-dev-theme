@@ -1,0 +1,33 @@
+<div class="media__grid-wrapper" data-pdp-zoom="">
+  <button class="media__grid-close-button">
+    <i class="icon-close"></i>
+  </button>
+  <ul class="media__grid">
+    {% for media in product.media %}
+      {% if media.media_type == "image" %}
+        <li class="media__grid-item">
+          <img
+            alt="{{media.alt}}"
+            class="media__grid-item-full lazyload"
+            src="{{ media | img_url: '1920x' }}">
+          </img>
+        </li>
+      {% endif %}
+    {% endfor %}
+    
+    {% for media in product.media %}
+      {% if media.media_type == 'video' %}
+        {% assign aspect_ratio = media.aspect_ratio | plus:0 %}
+        {% if aspect_ratio > 0.75 %}
+          <li class="media__grid-item-full">
+            {{ media | video_tag: autoplay: true, loop: true, playsinline: true }}
+          </li>
+        {% else %}
+          <li class="media__grid-item-half">
+            {{ media | video_tag: autoplay: true, loop: true, playsinline: true }}
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>

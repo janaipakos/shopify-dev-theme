@@ -59,3 +59,60 @@ $media-queries: (
     }
   }
 }
+
+// PDP Grid Styles
+
+.media__grid-wrapper {
+  position: relative;
+}
+
+  .media__grid-close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: none;
+    padding: 20px 25px;
+    opacity: 0;
+    transition: opacity 300ms;
+
+    .media__grid-wrapper--full & {
+      opacity: 1;
+    }
+  }
+
+  .media__grid {
+    display:flex;
+    width: 100%;
+    list-style: none;
+    flex-direction:row;
+    flex-wrap: wrap;
+
+    video {
+      width: 100%;
+    }
+  }
+
+    .media__grid-item {
+      cursor: crosshair;
+      width: 50%;
+    
+      .media__grid-wrapper--full & {
+        cursor: zoom-out;
+        width: 100%;
+      }
+    }
+
+      .media__grid-item-half {
+        cursor: crosshair;
+        width: 50%;
+      
+        .media__grid-wrapper--full & {
+          cursor: zoom-out;
+          width: 100%;
+        }
+      }
+      
+      .media__grid-item-full {
+        width: 100%;
+      }
